@@ -35,9 +35,9 @@ V = (pi/8)*sum(((D_edge.^2).*L_edge),2,'omitnan');
 
 
 % Input matrices
-B_dem = [0;0;0;1]; % demand channel
-B_h   = [0 0;1 0;0 1;0 0]; % well heads input channels
-B     = [1;0;0;0]; % control input channel
+B_dem = -[0;0;0;1]; % demand channel
+B_h   = -[0 0;1 0;0 1;0 0]; % well heads input channels
+B     = -[1;0;0;0]; % control input channel
 
 % initial condition
 p_init = zeros(n,1);
@@ -96,7 +96,7 @@ K_control = place(A,B,poles);
 
 %% MPC design
 % discrete model
-Ts = 0.01;
+Ts = 0.05;
 Ad = eye(n)+A*Ts;
 Bd = B*Ts;
 B_hd = B_h*Ts;
@@ -125,7 +125,7 @@ Aeq = [A_bar -B_bar;
      E0 zeros(n,h);
      E1 zeros(n,h)];
 % Aeq = [A_bar -B_bar];
-A_inv = pinv(A,0.01);
+A_inv = pinv(Ad-eye(n),0.01);
 
 % objective weights
 Q = diag([10 10 10 10]);
