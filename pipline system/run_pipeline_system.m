@@ -118,18 +118,22 @@ B_dem_bar = kron(eye(h),B_demd);
 
 % initialization constraint
 E0 = [eye(n), zeros(n,n*h)];
+E1 = [zeros(n,n*h), eye(n)];
 
 % pack constraints
 Aeq = [A_bar -B_bar;
-     E0 zeros(n,h)];
+     E0 zeros(n,h);
+     E1 zeros(n,h)];
 % Aeq = [A_bar -B_bar];
+A_inv = pinv(A,0.01);
 
 % objective weights
-Q = diag([0.2 0.2 100 100]);
+Q = diag([10 10 10 10]);
 R = 0.2;
 Q_bar = kron(eye(h+1),Q);
 R_bar = kron(eye(h),R);
 M = blkdiag(Q_bar, R_bar);
+
 
 
 
