@@ -1,7 +1,14 @@
-function x_next = myStateTransitionFcn(p,w)
+function x_next = myStateTransitionFcn(x,w)
+
+%% unpack input
+p = x(1:4);
+w_ex = x(5:end);
+w_h = w_ex(1:2);
+w_dem = w_ex(3);
 
 %% params
 c = 330;
+Ts = 0.05;
 
 % edge diameters
 D12 = 0.8;
@@ -36,9 +43,6 @@ B_dem = -[0;0;0;1]; % demand channel
 B_h   = -[0 0;1 0;0 1;0 0]; % well heads input channels
 B     = -[1;0;0;0]; % control input channel
 
-% exogen inputs
-w_h = [-5; -5];
-w_dem = 13;
 
 %% Dynamics
 p_sq = p.^2;
@@ -50,6 +54,6 @@ p_dot = c^2*(Psi*l)./V + B_h*w_h + B_dem*w_dem + B*w;
 
 %%  Discrete form
 p_next = p + p_dot*Ts;
-w_next = [w_h;w_dem];
+w_next = w_ex;
 
 x_next = [p_next; w_next];
