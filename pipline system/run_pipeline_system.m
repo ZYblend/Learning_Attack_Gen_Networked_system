@@ -139,7 +139,16 @@ M = blkdiag(Q_bar, R_bar);
 % Noise level
 R = 1e-5;  % measurement noise
 Q = 1e-5;  % process noise
+n_meas = 7;
 
 
+%% attack
+attack_start_injection = 120;  % Global attack injection start time
+detection_start = 100;         % bad data detection start time
+
+% Initializing attacks (zeros)
+attack_start_times      = attack_start_injection*ones(n_meas,1); 
+attack_full_times       = attack_start_times + 100;
+attack_final_deviations = 0.02*ones(n_meas,1);
 
 
