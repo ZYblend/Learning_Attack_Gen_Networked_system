@@ -1,7 +1,7 @@
 
 %% Run file for pipeline system
-clear 
-clc
+% clear 
+% clc
 %% parameters for simple transmission network
 n = 4;      % number of piplines: Pipe junctions are nodes, pipes are edges
 c = 330;
@@ -87,7 +87,7 @@ for i = 1:n
     end
 end
 A = J;
-length(A) - rank(ctrb(A,B))
+% length(A) - rank(ctrb(A,B))
 
 
 %% pole placement control (w_h, w_dem cannot be vanished)
@@ -143,12 +143,11 @@ n_meas = 7;
 
 
 %% attack
-attack_start_injection = 120;  % Global attack injection start time
-detection_start = 100;         % bad data detection start time
+attack_start_injection = 20;  % Global attack injection start time
 
 % Initializing attacks (zeros)
 attack_start_times      = attack_start_injection*ones(n_meas,1); 
 attack_full_times       = attack_start_times + 100;
-attack_final_deviations = 0.02*ones(n_meas,1);
+attack_final_deviations = 0.0*ones(n_meas,1);
 
 
