@@ -135,9 +135,10 @@ R_bar = kron(eye(h),R);
 M = blkdiag(Q_bar, R_bar);
 
 
-
-
-
+%% Unscented Kalman filter
+% Noise level
+R = 1e-5;  % measurement noise
+Q = 1e-5;  % process noise
 
 
 
