@@ -133,7 +133,7 @@ function [gradients,states,loss] = model_loss(net,Z,beta_n,stealth_net,effect_ne
 [g_theta, states] = forward(net,Z);
 % loss    = relu((sum(exp(f1(stealth_net,g_theta,thresh_1))) - beta_n)) + ...
 %            relu((sum(exp(f2(effect_net,g_theta,thresh_2))) - beta_n));
-loss = relu(mean(f1(stealth_net,g_theta,thresh_1))) + relu(mean(f2(effect_net,g_theta,thresh_2))/10);
+loss = relu(mean(f1(stealth_net,g_theta,thresh_1))) + relu(mean(f2(effect_net,g_theta,thresh_2)));
 % loss    = relu((sum(exp(leakyrelu(f1(stealth_net,g_theta,thresh_1))+ leakyrelu(f2(effect_net,g_theta,thresh_2)))) - beta_n));
 
 gradients = dlgradient(loss,net.Learnables);
@@ -144,4 +144,4 @@ out =  y - thresh_1;  % inidicator function
 
 function out = f2(net,x,thresh_2)
 y = forward(net,x);
-out =  (thresh_2 - y)/10;  % inidicator function
+out =  thresh_2 - y;  % inidicator function

@@ -18,8 +18,8 @@ n_generator_sim_sample = round(n_random_sim_samples);
 alpha = 0.8;  % probability of success
 % beta  = 1 - alpha;
 
-thresh_1 = 0.2;  % threshold for stealthiness
-thresh_2 = 10;  % threshold for effectivness
+thresh_1 = 0.5;  % threshold for stealthiness
+thresh_2 = 15;  % threshold for effectivness
 thresholds = [thresh_1,thresh_2];
 
 

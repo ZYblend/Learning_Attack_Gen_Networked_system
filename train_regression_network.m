@@ -17,7 +17,7 @@ function net = train_regression_network(net,dataset,loss_curve_param,i_epoch,fig
 
 %% training parameters 
 iteration       = 0;
-mini_batch_size = 500;
+mini_batch_size = 1000;
 
 % initialize Adam optimizer
 learnRate = 0.0002;
