@@ -1,4 +1,3 @@
-detector_train_flag = 0;
 attack_percentage = 1;
 Run_sim;
 
@@ -14,10 +13,10 @@ attack_full_times(attack_indices)       = attack_start_times(attack_indices) + a
 attack_final_deviations(attack_indices) = attack_data(2*n_attacked_nodes+1:3*n_attacked_nodes);
 
 %% run simulation
-out = sim("sample_system.slx");
+out = sim("pipline_system.slx");
 
-y = out.measurements;
-ya = out.attacked_measurements;
+y = out.critical_measurement;
+ya = out.attacked_measurement;
 ya_time = ya.Time;
 ya_data = reshape(ya.Data,size(ya.Data,1),size(ya.Data,3)).';
 

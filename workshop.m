@@ -18,8 +18,8 @@ n_generator_sim_sample = round(n_random_sim_samples);
 alpha = 0.8;  % probability of success
 % beta  = 1 - alpha;
 
-thresh_1 = 0.5;  % threshold for stealthiness
-thresh_2 = 15;  % threshold for effectivness
+thresh_1 = 0.2;  % threshold for stealthiness
+thresh_2 = 10;  % threshold for effectivness
 thresholds = [thresh_1,thresh_2];
 
 
@@ -41,7 +41,7 @@ catch
     n_neurons_effect = [50*inp_size_dis,100*inp_size_dis,50*inp_size_dis,1];
     effect_net = create_dl_network(inp_size_dis,activation_fcns_effect,n_neurons_effect); % Effectiveness network
 
-    activation_fcns_stealth = ["relu","relu","relu","sigmoid"];
+    activation_fcns_stealth = ["relu","relu","relu","linear"];
     n_neurons_stealth = [50*inp_size_dis,100*inp_size_dis,50*inp_size_dis,1];
     stealth_net = create_dl_network(inp_size_dis,activation_fcns_stealth,n_neurons_stealth); % stealthiness network
 end
@@ -111,6 +111,10 @@ for i_epoch = 1:n_epoch
 
     %% Training Generator with adam
     gen_net = training_generator(i_epoch,gen_net,stealth_net,effect_net,alpha,thresholds,loss_curve_param_gen);
+
+    %% save intermediate networks
+    dir_net_inter = "networks/"+num2str(length(attack_indices))+"/"+num2str(attack_indices)+"/trained_network_Epoch"+num2str(i_epoch)+".mat";
+    save(dir_net_inter,'gen_net','stealth_net','effect_net','-v7.3');
 
 end
 

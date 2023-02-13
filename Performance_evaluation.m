@@ -60,7 +60,7 @@ if plot_flag
     sgtitle("Testing Performance with discriminators")
     
     dir_test1 = "test_performance/"+num2str(length(attack_indices))+"/"+num2str(attack_indices)+"/test_result_with_dis.fig";
-    save(dir_test1)
+    savefig(dir_test1)
 end
 
 %% Testing performance with repect to the model simulation
@@ -105,5 +105,5 @@ if plot_flag
     sgtitle("Testing Performance with model simulation")
 
     dir_test2 = "test_performance/"+num2str(length(attack_indices))+"/"+num2str(attack_indices)+"/test_result_with_mdl.fig";
-    save(dir_test2)
+    savefig(dir_test2)
 end

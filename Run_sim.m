@@ -1,7 +1,7 @@
 % clear 
 % clc
 % 
-addpath('pipline system');
+addpath('pipeline_system');
 
 %% Simulation parameters
 t_sim_stop = 200;  % total simulation time per incidence
@@ -22,7 +22,7 @@ end
 % attack policy parameters
 attack_start_time_interval  = round([0.1 0.2]*t_sim_stop);
 attack_time_span_max_rate   = 0.5;
-attack_max = 0.25;
+attack_max = 0.5;
 policy_param = {attack_start_time_interval, attack_time_span_max_rate, attack_max, t_sim_stop};
 
 % getting nominal values
