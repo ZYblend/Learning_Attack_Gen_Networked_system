@@ -1,31 +1,52 @@
-%% test generator
+%% plot test performance of trained networks
+close all
+clear all
+clc
 
-% initialization
-detector_train_flag = 0;
+attack_percentage = 1;
 Run_sim;
+n_epoch = 5;
+tot_test = 100;
 
-% prepare inputs, generate attack policy's inputs
-inp_size = gen_net.Layers(1, 1).InputSize;
-
-Z_test        = rand(inp_size,n_test,"single");   % uniformly random noise as input
-Z_tet_dlarray = dlarray(Z_test,"CB");  
-
-test_out = double(forward(gen_net,Z_tet_dlarray));
-
-% testing
-Z_attack_data = double(extractdata(test_out));
-attack_data = ramp_attack_policy(policy_param,Z_attack_data);
-
-sim_obj = [];
-
-[sim_obj]  = get_simulation_object_sample_system(sim_obj,attack_data);
-[effect_index,stealth_index] = get_error_from_nominal(sim_obj);
+thresh_1 = 0.2;  % threshold for stealthiness
+thresh_2 = 10;  % threshold for effectivness
+thresholds = [thresh_1,thresh_2];
 
 
-%% calculate score, save data
-f1_out = stealth_index - thresh_1;
-f2_out = thresh_2 - effect_index;
-test_score_sim = sum((f1_out<=0) & (f2_out<=0))/n_test;
+stealth_epoch = zeros(tot_test,n_epoch);
+effect_epoch = zeros(tot_test,n_epoch);
 
-test_result = [effect_index,stealth_index];
+for i_epoch = 1:n_epoch
+    % load trained networks
+    dir_net_inter = "networks/"+num2str(length(attack_indices))+"/"+num2str(attack_indices)+"/trained_network_Epoch"+num2str(i_epoch)+".mat";
+    load_nets = load(dir_net_inter);
+    gen_net = load_nets.gen_net;
+    effect_net = load_nets.effect_net;
+    stealth_net = load_nets.stealth_net;
+
+    % test with simulation
+    n_test = round(tot_test/nchoosek(n_meas,n_attacked_nodes));
+    [test_score_dis,test_score_sim,~,~,stealth_epoch(:,i_epoch), effect_epoch(:,i_epoch)] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,n_test,attack_percentage,policy_param,false);
+    disp("Testing score with discriminators = " + num2str(test_score_dis) )
+    disp("Testing score with model simualtion = " + num2str(test_score_sim))
+
+end
+
+%% plot
+epoch_ax = linspace(1,n_epoch,n_epoch);
+
+figure
+subplot(1,2,1)
+yline(thresh_1,'k')
+hold on, boxplot([stealth_epoch(:,1),stealth_epoch(:,2),stealth_epoch(:,3),stealth_epoch(:,4),stealth_epoch(:,5)],'Notch','on','Labels',{'1','2','3','4','5'});
+xlabel('Epoch')
+ylabel('Stealthiness')
+subplot(1,2,2)
+yline(thresh_2,'k')
+hold on, boxplot([effect_epoch(:,1),effect_epoch(:,2),effect_epoch(:,3),effect_epoch(:,4),effect_epoch(:,5)],'Notch','on','Labels',{'1','2','3','4','5'})
+xlabel('Epoch')
+ylabel('Effectiveness')
+
+
+
 

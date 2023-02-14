@@ -2,6 +2,7 @@
 %% Run file for pipeline system
 % clear 
 % clc
+t_sim_stop = 2000;
 %% parameters for simple transmission network
 n = 4;      % number of piplines: Pipe junctions are nodes, pipes are edges
 c = 330;
