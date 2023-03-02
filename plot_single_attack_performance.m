@@ -32,98 +32,43 @@ LW = 1.5;
 FS = 1.5;
 figure
 
-%% nominal plot
-subplot(4,3,1);
-plot(y_time,y_nominal(:,1),'k-',LineWidth=LW);
-ylabel('p_1',FontSize=FS);
-title('Nominal measurements');
-hold on, yline(p_eq(1),'r--',LineWidth=LW);
-% ylim([0 15])
-grid on
-set(gca,"FontSize",12)
-
-subplot(4,3,4);
-plot(y_time,y_nominal(:,2),'k-',LineWidth=LW);
-ylabel('p_2',FontSize=FS);
-hold on, yline(p_eq(2),'r--',LineWidth=LW);
-% ylim([0 15])
-grid on
-set(gca,"FontSize",12)
-
-subplot(4,3,7);
-plot(y_time,y_nominal(:,3),'k-',LineWidth=LW);
-ylabel('p_3',FontSize=FS);
-% ylim([0 20])
-grid on
-hold on, yline(p_eq(3),'r--',LineWidth=LW);
-set(gca,"FontSize",12)
-
-subplot(4,3,10);
-plot(y_time,y_nominal(:,4),'k-',LineWidth=LW);
-ylabel('p_4',FontSize=FS);
-% ylim([0 20])
-grid on
-hold on, yline(p_eq(4),'r--',LineWidth=LW);
-set(gca,"FontSize",12)
 
 %% attacked real plot
-subplot(4,3,2);
+subplot(2,2,1);
 plot(y_time,y_data(:,1),'k-',LineWidth=LW);
-title('Real measurements')
 % ylim([0 15])
+ylabel('p_1');
 hold on, yline(p_eq(1),'r--',LineWidth=LW);
 grid on
 set(gca,"FontSize",12)
 
-subplot(4,3,5);
+subplot(2,2,2);
 plot(y_time,y_data(:,2),'k-',LineWidth=LW);
 % ylim([0 15])
+ylabel('p_2');
 hold on, yline(p_eq(2),'r--',LineWidth=LW);
 grid on
 set(gca,"FontSize",12)
 
-subplot(4,3,8);
+subplot(2,2,3);
 plot(y_time,y_data(:,3),'k-',LineWidth=LW);
 % ylim([0 20])
+ylabel('p_3');
 hold on, yline(p_eq(3),'r--',LineWidth=LW);
 grid on
 set(gca,"FontSize",12)
 
-subplot(4,3,11);
+subplot(2,2,4);
 plot(y_time,y_data(:,4),'k-',LineWidth=LW);
 % ylim([0 20])
+ylabel('p_4');
 hold on, yline(p_eq(4),'r--',LineWidth=LW);
 grid on
 set(gca,"FontSize",12)
 
-%% attacked real plot
-subplot(4,3,3);
-plot(ya_time,ya_data(:,1),'k-',LineWidth=LW);
-title('Attacked measurements');
-hold on, yline(p_eq(1),'r--',LineWidth=LW);
-grid on
+figure
+plot(out.residual.Time, out.residual.Data,'k-',LineWidth=LW);
+hold on, yline(thresh_1,'r--',LineWidth=LW);
+title('BDD Residual')
 set(gca,"FontSize",12)
 
-% subplot(4,3,6);
-% plot(ya_time(ya_time>detection_start),ya_data(ya_time>detection_start,2),'k-',LineWidth=LW);
-% ylim([0 1.5])
-% subplot(4,3,9);
-% plot(ya_time(ya_time>detection_start),ya_data(ya_time>detection_start,3),'k-',LineWidth=LW);
-% ylim([0 0.6])
-subplot(4,3,6);
-plot(ya_time,ya_data(:,2),'k-',LineWidth=LW);
-hold on, yline(p_eq(2),'r--',LineWidth=LW);
-grid on
-set(gca,"FontSize",12)
-
-subplot(4,3,9);
-plot(ya_time,ya_data(:,3),'k-',LineWidth=LW);
-hold on, yline(p_eq(3),'r--',LineWidth=LW);
-grid on
-set(gca,"FontSize",12)
-
-subplot(4,3,12);
-plot(ya_time,ya_data(:,4),'k-',LineWidth=LW);
-hold on, yline(p_eq(4),'r--',LineWidth=LW);
-grid on
-set(gca,"FontSize",12)
