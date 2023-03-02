@@ -1,4 +1,4 @@
-# Networked_pipeline_system_model
+# Networked_pipeline_system
 
 Please refer to the paper:
 - Conference version: [**submitted**]
@@ -11,4 +11,6 @@ Please refer to the paper:
 
 - Training Performance:
 ![train_performance_sim](https://user-images.githubusercontent.com/36635562/218855290-446ccb8f-cd04-4f6e-a66f-2d0b0bc61248.png)
+
+# Network IEEE 14-bus System
 
