@@ -8,18 +8,18 @@ attack_percentage = 1;
 Run_sim;
 
 %% global training parameters
-n_epoch         = 10;
+n_epoch         = 5;
 
 generate_generator_data_flag = true;
-n_random_sim_samples = 4000;  % Number of random attack dataset per epoch used to train descriminators
+n_random_sim_samples = 2000;  % Number of random attack dataset per epoch used to train descriminators
 n_generator_sim_sample = round(n_random_sim_samples);
 
 %% Initialize Generator network
 alpha = 0.8;  % probability of success
 % beta  = 1 - alpha;
 
-thresh_1 = 0.5;  % threshold for stealthiness
-thresh_2 = 0.8;  % threshold for effectivness
+thresh_1 = 0.02;  % threshold for stealthiness
+thresh_2 = 0.025;  % threshold for effectivness
 thresholds = [thresh_1,thresh_2];
 
 
@@ -37,12 +37,12 @@ catch
     gen_net = create_dl_network(inp_size,activation_fcns_gen,n_neurons_gen); % generator network
 
     inp_size_dis = 3*n_attacked_nodes;
-    activation_fcns_effect = ["relu","relu","relu","relu","linear"];
-    n_neurons_effect = [50*inp_size_dis,100*inp_size_dis,100*inp_size_dis,50*inp_size_dis,1];
+    activation_fcns_effect = ["relu","relu","relu","linear"];
+    n_neurons_effect = [50*inp_size_dis,100*inp_size_dis,50*inp_size_dis,1];
     effect_net = create_dl_network(inp_size_dis,activation_fcns_effect,n_neurons_effect); % Effectiveness network
 
-    activation_fcns_stealth = ["relu","relu","relu","relu","linear"];
-    n_neurons_stealth = [50*inp_size_dis,100*inp_size_dis,100*inp_size_dis,,50*inp_size_dis,1];
+    activation_fcns_stealth = ["relu","relu","relu","linear"];
+    n_neurons_stealth = [50*inp_size_dis,100*inp_size_dis,50*inp_size_dis,1];
     stealth_net = create_dl_network(inp_size_dis,activation_fcns_stealth,n_neurons_stealth); % stealthiness network
 end
 inp_size_dis = 3*n_attacked_nodes;

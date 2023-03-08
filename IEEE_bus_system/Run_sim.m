@@ -22,7 +22,7 @@ end
 % attack policy parameters
 attack_start_time_interval  = round([0.1 0.2]*t_sim_stop);
 attack_time_span_max_rate   = 0.5;
-attack_max = 10;
+attack_max = 0.02;
 policy_param = {attack_start_time_interval, attack_time_span_max_rate, attack_max, t_sim_stop};
 
 % getting nominal values
@@ -31,10 +31,9 @@ out = sim(model);
 
 
 yc_nominal = out.critical_measurement.Data;
-% yc_nominal = reshape(yc_nominal,size(yc_nominal,1),size(yc_nominal,3)).';
 r_nominal = out.residual.Data;
 
-save('nominal_index.mat','yc_nominal','r_nominal','-v7.3')
+% save('nominal_index.mat','yc_nominal','r_nominal','-v7.3')
 
 
 

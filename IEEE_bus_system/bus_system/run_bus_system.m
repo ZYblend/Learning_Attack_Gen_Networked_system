@@ -129,7 +129,7 @@ disp(eig(A_bar_d-L_obsv*C_obsv_d).')
  
 %% Simulation Initialization
 x0          = zeros(n_states,1);
-x0_hat      = zeros(n_states,1);
+x0_hat      = x0;
 load_buses  = [zeros(n_gen,1); ones(n_bus-n_gen,1)];
 
 T_final = 8;

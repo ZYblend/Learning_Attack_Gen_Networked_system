@@ -29,6 +29,7 @@ for iter = 1:miniBatchSize
     
     residual = sim_out(iter).residual.Data;
    
-    yc_error(iter) = mean(vecnorm(yc_error_signal,2,2))/max(vecnorm(yc_nominal,2,2));
+%     yc_error(iter) = mean(vecnorm(yc_error_signal,2,2))/max(vecnorm(yc_nominal,2,2));
+    yc_error(iter) = mean(vecnorm(yc_error_signal,2,2));
     r_error(iter) = max(residual);   % tolerance bound for the residual
 end

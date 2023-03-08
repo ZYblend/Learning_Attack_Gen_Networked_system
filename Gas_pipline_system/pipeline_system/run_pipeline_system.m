@@ -92,7 +92,7 @@ A = J;
 
 
 %% pole placement control (w_h, w_dem cannot be vanished)
-poles = -10*rand(n,1);
+poles = [-1; -2; -4; -5];
 K_control = place(A,B,poles);
 
 %% MPC design
