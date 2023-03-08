@@ -11,7 +11,7 @@ Run_sim;
 n_epoch         = 5;
 
 generate_generator_data_flag = true;
-n_random_sim_samples = 2000;  % Number of random attack dataset per epoch used to train descriminators
+n_random_sim_samples = 4000;  % Number of random attack dataset per epoch used to train descriminators
 n_generator_sim_sample = round(n_random_sim_samples);
 
 %% Initialize Generator network

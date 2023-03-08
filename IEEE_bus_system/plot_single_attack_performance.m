@@ -13,16 +13,17 @@ attack_full_times(attack_indices)       = attack_start_times(attack_indices) + a
 attack_final_deviations(attack_indices) = attack_data(2*n_attacked_nodes+1:3*n_attacked_nodes);
 
 %% run simulation
-out = sim("pipline_system.slx");
+out = sim("bus_system.slx");
 
+%%
 y = out.critical_measurement;
 y_time = y.Time;
-y_data = reshape(y.Data,size(y.Data,1),size(y.Data,3)).';
+y_data = y.Data;
 
 ya = out.attacked_measurement;
 ya_time = ya.Time;
-ya_data = reshape(ya.Data,size(ya.Data,1),size(ya.Data,3)).';
-ya_data = ya_data(:,1:n);
+ya_data = ya.Data;
+% ya_data = ya_data(:,1:n);
 
 y_nominal = yc_nominal;
 
@@ -32,40 +33,23 @@ LW = 1.5;
 FS = 1.5;
 figure
 
-
 %% attacked real plot
-subplot(2,2,1);
-plot(y_time,y_data(:,1),'k-',LineWidth=LW);
-% ylim([0 15])
-ylabel('p_1');
-hold on, yline(p_eq(1),'r--',LineWidth=LW);
-grid on
+figure
+for iter = 1:5
+    subplot(5,1,iter);
+    plot(y_time,y_data(:,iter),'r-',LineWidth=LW);
+    hold on, plot(y_time,y_nominal(:,iter),'k--',LineWidth=LW);
+    legend('Attacked','Nominal')
+    grid on
+    label_name = "\theta_"+num2str(iter);
+    ylabel(label_name);
+    set(gca,"FontSize",12)
+end
+title_name = "Effectiveness ="+num2str(100*effect_index(index_high_effect)/max(vecnorm(yc_nominal,2,2)))+"%";
+sgtitle(title_name);
 set(gca,"FontSize",12)
 
-subplot(2,2,2);
-plot(y_time,y_data(:,2),'k-',LineWidth=LW);
-% ylim([0 15])
-ylabel('p_2');
-hold on, yline(p_eq(2),'r--',LineWidth=LW);
-grid on
-set(gca,"FontSize",12)
-
-subplot(2,2,3);
-plot(y_time,y_data(:,3),'k-',LineWidth=LW);
-% ylim([0 20])
-ylabel('p_3');
-hold on, yline(p_eq(3),'r--',LineWidth=LW);
-grid on
-set(gca,"FontSize",12)
-
-subplot(2,2,4);
-plot(y_time,y_data(:,4),'k-',LineWidth=LW);
-% ylim([0 20])
-ylabel('p_4');
-hold on, yline(p_eq(4),'r--',LineWidth=LW);
-grid on
-set(gca,"FontSize",12)
-
+% BDD
 figure
 plot(out.residual.Time, out.residual.Data,'k-',LineWidth=LW);
 hold on, yline(thresh_1,'r--',LineWidth=LW);
