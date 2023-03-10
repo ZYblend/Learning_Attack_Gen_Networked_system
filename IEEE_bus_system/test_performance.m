@@ -3,7 +3,7 @@ close all
 clear all
 clc
 
-attack_percentage = 1;
+attack_percentage = 0.3;
 Run_sim;
 n_epoch = 5;
 tot_test = 1000;
@@ -25,8 +25,8 @@ for i_epoch = 1:n_epoch
     stealth_net = load_nets.stealth_net;
 
     % test with simulation
-    n_test = round(tot_test/nchoosek(n_meas,n_attacked_nodes));
-    [test_score_dis,test_score_sim,~,~,stealth_epoch(:,i_epoch), effect_epoch(:,i_epoch)] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,n_test,attack_percentage,policy_param,false);
+%     n_test = round(tot_test/nchoosek(n_meas,n_attacked_nodes));
+    [test_score_dis,test_score_sim,~,~,stealth_epoch(:,i_epoch), effect_epoch(:,i_epoch)] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,tot_test,attack_percentage,policy_param,false);
     disp("Testing score with discriminators = " + num2str(test_score_dis) )
     disp("Testing score with model simualtion = " + num2str(test_score_sim))
 
@@ -49,7 +49,7 @@ xlabel('Epoch')
 ylabel('Stealthiness')
 subplot(1,2,2)
 yline(thresh_2/max(vecnorm(yc_nominal,2,2)),'k')
-hold on, boxplot([effect_index, effect_epoch(:,1),effect_epoch(:,2),effect_epoch(:,3),effect_epoch(:,4),effect_epoch(:,5)],'Notch','on','Labels',{'0','1','2','3','4','5'});
+hold on, boxplot([effect_index,effect_epoch(:,1),effect_epoch(:,2),effect_epoch(:,3),effect_epoch(:,4),effect_epoch(:,5)],'Notch','on','Labels',{'0','1','2','3','4','5'});
 xlabel('Epoch')
 ylabel('Effectiveness')
 ylim([0,0.5])

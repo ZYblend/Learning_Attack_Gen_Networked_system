@@ -1,9 +1,8 @@
-function workshop
-clc
-clear
-close all
+function workshop(attack_percentage)
+% clc
+% clear
+% close all
 
-attack_percentage = 1;
 %% load system base parameters
 Run_sim;
 
@@ -130,10 +129,10 @@ savefig(dir_dis2)
 dir_net = "test_performance/"+num2str(length(attack_indices))+"/"+num2str(attack_indices)+"/trained_network.mat";
 save(dir_net,'gen_net','stealth_net','effect_net','-v7.3');
 
-tot_test = 6000;
+tot_test = 100;
 n_test = round(tot_test/nchoosek(n_meas,n_attacked_nodes));
-[test_score_dis,test_score_sim,~,~,~,~] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,n_test,attack_percentage,policy_param,true);
+[test_score_dis,test_score_sim,~,~,~,~] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,tot_test,attack_percentage,policy_param,true);
 disp("Testing score with discriminators = " + num2str(test_score_dis) + " ::: Target = " + num2str(alpha))
 disp("Testing score with model simualtion = " + num2str(test_score_sim) + " ::: Target = " + num2str(alpha))
 
-keyboard
+% keyboard

@@ -1,7 +1,7 @@
 % clear 
 % clc
 % 
-addpath('bus_system');
+% addpath('bus_system');
 
 %% system param
 run_bus_system;

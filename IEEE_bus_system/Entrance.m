@@ -4,4 +4,4 @@ clc
 
 attack_percentage = 1;
 Run_sim;
-workshop;
+workshop(attack_percentage);
