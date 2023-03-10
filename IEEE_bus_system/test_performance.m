@@ -3,7 +3,7 @@ close all
 clear all
 clc
 
-attack_percentage = 0.3;
+attack_percentage = 1;
 Run_sim;
 n_epoch = 5;
 tot_test = 1000;
