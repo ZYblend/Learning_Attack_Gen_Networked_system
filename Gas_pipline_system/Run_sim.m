@@ -2,6 +2,9 @@
 % clc
 % 
 addpath('pipeline_system');
+addpath('pipeline_system\linear_topology\')
+% % addpath('pipeline_system\tree_topology\')
+% % addpath('pipeline_system\cyclic_topology\')
 
 %% Simulation parameters
 t_sim_stop = 200;  % total simulation time per incidence
@@ -26,7 +29,13 @@ attack_max = 0.5;
 policy_param = {attack_start_time_interval, attack_time_span_max_rate, attack_max, t_sim_stop};
 
 % getting nominal values
-model = "pipline_system";
+if topology == "linear"
+    model = "linear_topology/pipline_system";
+elseif topology == "tree"
+    model = "tree_topology/pipline_system";
+elseif topology == "cyclic"
+    model = "cyclic_topology/pipline_system";
+end
 out = sim(model);
 
 

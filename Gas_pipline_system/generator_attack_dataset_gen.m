@@ -1,4 +1,4 @@
-function [Z_attack_data,effect_index,stealth_index] = generator_attack_dataset_gen(gen_net,generate_data_flag,inp_size,n_sim_samples,attack_percentage,policy_param)
+function [Z_attack_data,effect_index,stealth_index] = generator_attack_dataset_gen(gen_net,generate_data_flag,inp_size,n_sim_samples,attack_percentage,policy_param,topology)
 %% function [sim_obj,Z_attack_data,effect_index,stealth_index] = generator_attack_dataset_gen(gen_net,i_epoch,generate_data_flag,inp_size,n_sim_samples,t_sim_stop)
 % Description
 %
@@ -13,7 +13,7 @@ if generate_data_flag == true
 
     % getting simulation object
     sim_obj = [];
-    [sim_obj]  = get_simulation_object_sample_system(sim_obj,attack_data,attack_percentage);
+    [sim_obj]  = get_simulation_object_sample_system(sim_obj,attack_data,attack_percentage,topology);
     [effect_index,stealth_index] = get_error_from_nominal(sim_obj);
 
 %     save('generator_attack_data','effect_index','stealth_index','Z_attack_data','-v7.3');

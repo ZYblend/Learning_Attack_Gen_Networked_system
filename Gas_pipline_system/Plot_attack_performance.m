@@ -11,8 +11,14 @@ close all
 %% get a generated attack
 load('attack_support.mat');
 load('test_performance/7/1  2  3  4  5  6  7/test_result.mat');
+
+%% define hyperparameters
 thresh_1 = 0.2;  % threshold for stealthiness
 thresh_2 = 10;  % threshold for effectivness
+
+attack_percentage = 1;
+% choose network topology: linear, tree, cyclic
+topology = "linear";
 
 
 %% test

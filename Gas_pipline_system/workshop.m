@@ -1,9 +1,8 @@
-function workshop
-clc
-clear
-close all
+function workshop(attack_percentage,topology)
+% clc
+% clear
+% close all
 
-attack_percentage = 1;
 %% load system base parameters
 Run_sim;
 
@@ -79,7 +78,7 @@ loss_curve_param_dis1 = {loss_fig_dis1,dis1LossTrain,start};
 loss_curve_param_dis2 = {loss_fig_dis2,dis2LossTrain,start};
 
  %%% random attack dataset 
-[Z_attack_data_rand,effect_index_rand,stealth_index_rand] = random_attack_dataset_gen(n_attacked_nodes,n_random_sim_samples,attack_percentage,policy_param);
+[Z_attack_data_rand,effect_index_rand,stealth_index_rand] = random_attack_dataset_gen(n_attacked_nodes,n_random_sim_samples,attack_percentage,policy_param,topology);
 cache_dir_rand = "training_dataset/"+ num2str(length(attack_indices))+"/"+num2str(attack_indices)+"/random_attack_data.mat" ;
 save(cache_dir_rand, 'effect_index_rand','stealth_index_rand','Z_attack_data_rand','-v7.3');
 
@@ -94,7 +93,7 @@ for i_epoch = 1:n_epoch
         effect_index_gen  = local_var_gen.effect_index_gen;
         stealth_index_gen = local_var_gen.stealth_index_gen;
     catch
-        [Z_attack_data_gen,effect_index_gen,stealth_index_gen] = generator_attack_dataset_gen(gen_net,generate_generator_data_flag,inp_size,n_generator_sim_sample,attack_percentage,policy_param);
+        [Z_attack_data_gen,effect_index_gen,stealth_index_gen] = generator_attack_dataset_gen(gen_net,generate_generator_data_flag,inp_size,n_generator_sim_sample,attack_percentage,policy_param,topology);
         save(cache_dir_gen, 'effect_index_gen','stealth_index_gen','Z_attack_data_gen','-v7.3');
     end
 
@@ -132,7 +131,7 @@ save(dir_net,'gen_net','stealth_net','effect_net','-v7.3');
 
 tot_test = 6000;
 n_test = round(tot_test/nchoosek(n_meas,n_attacked_nodes));
-[test_score_dis,test_score_sim,~,~,~,~] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,n_test,attack_percentage,policy_param,true);
+[test_score_dis,test_score_sim,~,~,~,~] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,n_test,attack_percentage,policy_param,topology,true);
 disp("Testing score with discriminators = " + num2str(test_score_dis) + " ::: Target = " + num2str(alpha))
 disp("Testing score with model simualtion = " + num2str(test_score_sim) + " ::: Target = " + num2str(alpha))
 

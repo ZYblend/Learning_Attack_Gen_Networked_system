@@ -1,4 +1,3 @@
-attack_percentage = 1;
 Run_sim;
 
 attack_data = ramp_attack_policy(policy_param,z_attack_data);
@@ -13,7 +12,14 @@ attack_full_times(attack_indices)       = attack_start_times(attack_indices) + a
 attack_final_deviations(attack_indices) = attack_data(2*n_attacked_nodes+1:3*n_attacked_nodes);
 
 %% run simulation
-out = sim("pipline_system.slx");
+if topology == "linear"
+    model = "linear_topology/pipline_system";
+elseif topology == "tree"
+    model = "tree_topology/pipline_system";
+elseif topology == "cyclic"
+    model = "cyclic_topology/pipline_system";
+end
+out = sim(model);
 
 y = out.critical_measurement;
 y_time = y.Time;

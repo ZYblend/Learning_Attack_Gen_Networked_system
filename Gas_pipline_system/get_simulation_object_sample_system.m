@@ -1,4 +1,4 @@
-function [sim_out] = get_simulation_object_sample_system(sim_inp_in,attack_data,attack_percentage)
+function [sim_out] = get_simulation_object_sample_system(sim_inp_in,attack_data,attack_percentage,topology)
 % Returns an array of Simulink.SimulationInput object for parrallel
 % execution
 %
@@ -28,8 +28,13 @@ Run_sim
 % NOTE: All variables will be supplied by a call to the run file 
 %                     (Run_Sim in this case)
 if(isempty(sim_inp_in))
-
-    model = 'pipline_system';
+    if topology == "linear"
+        model = "linear_topology/pipline_system";
+    elseif topology == "tree"
+        model = "tree_topology/pipline_system";
+    elseif topology == "cyclic"
+        model = "cyclic_topology/pipline_system";
+    end
     load_system(model);
 
 %     % build rapid accelerator target
