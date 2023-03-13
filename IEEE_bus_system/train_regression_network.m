@@ -31,7 +31,7 @@ trailingAvgSq = [];
 Z_input = dataset{1,1};
 Z_output = dataset{1,2};
 
-n_batch = 20;
+n_batch = 10;
 % n_samples = round(n_batch*mini_batch_size);
 % n_batch  = round(n_samples/mini_batch_size);
 

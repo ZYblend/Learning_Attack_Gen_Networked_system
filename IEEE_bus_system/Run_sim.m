@@ -1,7 +1,7 @@
 % clear 
 % clc
 % 
-% addpath('bus_system');
+addpath('bus_system');
 
 %% system param
 run_bus_system;
@@ -19,11 +19,25 @@ catch
     save attack_support.mat attack_indices
 end
 
-% attack policy parameters
-attack_start_time_interval  = round([0.1 0.2]*t_sim_stop);
-attack_time_span_max_rate   = 0.5;
-attack_max = 0.02;
-policy_param = {attack_start_time_interval, attack_time_span_max_rate, attack_max, t_sim_stop};
+% % attack policy parameters (for ramp, pulse attack)
+if attack_type == "ramp"
+    attack_start_time_interval  = round([0.1 0.2]*t_sim_stop);
+    attack_time_span_max_rate   = 0.5;
+    attack_max = 0.03;
+    policy_param = {attack_start_time_interval, attack_time_span_max_rate, attack_max, t_sim_stop};
+elseif attack_type =="pulse"
+    attack_start_time_interval  = round([0.1 0.2]*t_sim_stop);
+    attack_time_span_max_rate   = 1;
+    attack_max = 0.03;
+    policy_param = {attack_start_time_interval, attack_time_span_max_rate, attack_max, t_sim_stop};
+elseif attack_type == "sin"
+    % (for sin attack)
+    attack_start_time_interval  = round([0.1 0.2]*t_sim_stop);
+    attack_time_span_max_rate   = 1;
+    a_attack_interval = [-0.05 0.05];
+    b_attack_interval = [-5, 5];
+    policy_param = {attack_start_time_interval, attack_time_span_max_rate, a_attack_interval, b_attack_interval, t_sim_stop};
+end
 
 % getting nominal values
 model = "bus_system";

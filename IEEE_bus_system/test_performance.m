@@ -4,12 +4,22 @@ clear all
 clc
 
 attack_percentage = 1;
+
+% choose attack policy
+% "ramp", "pulse", "sin"
+attack_type = "ramp";
+
 Run_sim;
-n_epoch = 5;
+n_epoch = 10;
 tot_test = 1000;
 
-thresh_1 = 0.02;  % threshold for stealthiness
-thresh_2 = 0.025;  % threshold for effectivness
+if attack_type == "ramp" || attack_type =="pulse"
+    thresh_1 = 0.05;  % threshold for stealthiness
+    thresh_2 = 0.04;  % threshold for effectivness
+elseif attack_type == "sin"
+    thresh_1 = 0.05;  % threshold for stealthiness
+    thresh_2 = 0.02;  % threshold for effectivness
+end
 thresholds = [thresh_1,thresh_2];
 
 
@@ -26,7 +36,7 @@ for i_epoch = 1:n_epoch
 
     % test with simulation
 %     n_test = round(tot_test/nchoosek(n_meas,n_attacked_nodes));
-    [test_score_dis,test_score_sim,~,~,stealth_epoch(:,i_epoch), effect_epoch(:,i_epoch)] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,tot_test,attack_percentage,policy_param,false);
+    [test_score_dis,test_score_sim,~,~,stealth_epoch(:,i_epoch), effect_epoch(:,i_epoch)] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,tot_test,attack_percentage,policy_param,attack_type,false);
     disp("Testing score with discriminators = " + num2str(test_score_dis) )
     disp("Testing score with model simualtion = " + num2str(test_score_sim))
 
@@ -44,12 +54,14 @@ effect_epoch = effect_epoch/max(vecnorm(yc_nominal,2,2));
 figure
 subplot(1,2,1)
 yline(thresh_1,'k')
-hold on, boxplot([stealth_index,stealth_epoch(:,1),stealth_epoch(:,2),stealth_epoch(:,3),stealth_epoch(:,4),stealth_epoch(:,5)],'Notch','on','Labels',{'0','1','2','3','4','5'});
+stealth = [stealth_index(1:1000),stealth_epoch];
+hold on, boxplot(stealth);
 xlabel('Epoch')
 ylabel('Stealthiness')
 subplot(1,2,2)
 yline(thresh_2/max(vecnorm(yc_nominal,2,2)),'k')
-hold on, boxplot([effect_index,effect_epoch(:,1),effect_epoch(:,2),effect_epoch(:,3),effect_epoch(:,4),effect_epoch(:,5)],'Notch','on','Labels',{'0','1','2','3','4','5'});
+effect = [effect_index(1:1000),effect_epoch];
+hold on, boxplot(effect);
 xlabel('Epoch')
 ylabel('Effectiveness')
 ylim([0,0.5])

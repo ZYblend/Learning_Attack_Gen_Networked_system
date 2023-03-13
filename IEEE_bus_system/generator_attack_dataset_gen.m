@@ -1,4 +1,4 @@
-function [Z_attack_data,effect_index,stealth_index] = generator_attack_dataset_gen(gen_net,generate_data_flag,inp_size,n_sim_samples,attack_percentage,policy_param)
+function [Z_attack_data,effect_index,stealth_index] = generator_attack_dataset_gen(gen_net,generate_data_flag,inp_size,n_sim_samples,attack_percentage,policy_param,attack_type)
 %% function [sim_obj,Z_attack_data,effect_index,stealth_index] = generator_attack_dataset_gen(gen_net,i_epoch,generate_data_flag,inp_size,n_sim_samples,t_sim_stop)
 % Description
 %
@@ -9,11 +9,17 @@ if generate_data_flag == true
     Z_train_dlarray = dlarray(Z_train,"CB");                     % covert to dlarray
     
     Z_attack_data = double(extractdata(forward(gen_net,Z_train_dlarray)));
-    attack_data   = ramp_attack_policy(policy_param,Z_attack_data);
+    if attack_type == "ramp"
+        attack_data = ramp_attack_policy(policy_param,Z_attack_data);
+    elseif attack_type == "pulse"
+        attack_data = pulse_attack_policy(policy_param,Z_attack_data);
+    elseif attack_type == "sin"
+        attack_data = sin_attack_policy(policy_param,Z_attack_data);
+    end
 
     % getting simulation object
     sim_obj = [];
-    [sim_obj]  = get_simulation_object_sample_system(sim_obj,attack_data,attack_percentage);
+    [sim_obj]  = get_simulation_object_sample_system(sim_obj,attack_data,attack_percentage,attack_type);
     [effect_index,stealth_index] = get_error_from_nominal(sim_obj);
 
 %     save('generator_attack_data','effect_index','stealth_index','Z_attack_data','-v7.3');
