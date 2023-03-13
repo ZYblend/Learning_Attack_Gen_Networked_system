@@ -36,7 +36,7 @@ catch
     n_neurons_gen = [50*inp_size,100*inp_size,50*inp_size,out_size];
     gen_net = create_dl_network(inp_size,activation_fcns_gen,n_neurons_gen); % generator network
 
-    inp_size_dis = 3*n_attacked_nodes;
+    inp_size_dis = out_size;
     activation_fcns_effect = ["relu","relu","relu","linear"];
     n_neurons_effect = [50*inp_size_dis,100*inp_size_dis,50*inp_size_dis,1];
     effect_net = create_dl_network(inp_size_dis,activation_fcns_effect,n_neurons_effect); % Effectiveness network
@@ -45,7 +45,7 @@ catch
     n_neurons_stealth = [50*inp_size_dis,100*inp_size_dis,50*inp_size_dis,1];
     stealth_net = create_dl_network(inp_size_dis,activation_fcns_stealth,n_neurons_stealth); % stealthiness network
 end
-inp_size_dis = 3*n_attacked_nodes;
+inp_size_dis = out_size;
 
 %% loss curve Plot routine
 loss_fig_gen = figure;

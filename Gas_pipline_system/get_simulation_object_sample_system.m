@@ -51,7 +51,9 @@ if(isempty(sim_inp_in))
         sim_inp(iter) = sim_inp(iter).setVariable('B',B);
         sim_inp(iter) = sim_inp(iter).setVariable('w_eq',w_eq);
         sim_inp(iter) = sim_inp(iter).setVariable('p_eq',p_eq);
+        sim_inp(iter) = sim_inp(iter).setVariable('p_init',p_init);
         sim_inp(iter) = sim_inp(iter).setVariable('n',n);
+        sim_inp(iter) = sim_inp(iter).setVariable('n_meas',n_meas);
 % control param
         sim_inp(iter) = sim_inp(iter).setVariable('M',M);
         sim_inp(iter) = sim_inp(iter).setVariable('Aeq',Aeq);
@@ -63,6 +65,8 @@ if(isempty(sim_inp_in))
         sim_inp(iter) = sim_inp(iter).setVariable('Q',Q);
         sim_inp(iter) = sim_inp(iter).setVariable('R',R);
         sim_inp(iter) = sim_inp(iter).setVariable('Ts',Ts);
+        sim_inp(iter) = sim_inp(iter).setVariable('Tsim',Tsim);
+        sim_inp(iter) = sim_inp(iter).setVariable('T_MPC',T_MPC);
         sim_inp(iter) = sim_inp(iter).setVariable('t_sim_stop',t_sim_stop);
 
     end
