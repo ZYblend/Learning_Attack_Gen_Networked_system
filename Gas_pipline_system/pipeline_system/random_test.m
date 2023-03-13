@@ -5,7 +5,7 @@
 
 attack_percentage = 1;
 Run_sim;
-N_test = 1000;
+N_test = 100;
 
 Z_attack_data = rand(3*n_attacked_nodes,N_test);
 attack_data = ramp_attack_policy(policy_param,Z_attack_data);
