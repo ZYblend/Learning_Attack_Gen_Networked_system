@@ -10,7 +10,7 @@ close all
 
 % choose attack policy
 % "ramp", "pulse", "sin"
-attack_type = "ramp";
+attack_type = "sin";
 
 %% get a generated attack
 load('attack_support.mat');

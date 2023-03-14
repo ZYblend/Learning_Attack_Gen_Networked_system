@@ -67,7 +67,7 @@ end
 
 %% Run simulation in parralel 
 for iter = 1:batch_size
-    if attack_type == "ramp" || attack_type == "pulse"
+    if attack_type == "ramp"
         % for ramp, pulse attack
         attack_start_times      = attack_start_injection*ones(n_meas,1);
         attack_full_times       = attack_start_times +  0;
@@ -80,7 +80,7 @@ for iter = 1:batch_size
         sim_inp(iter) = sim_inp(iter).setVariable('attack_start_times',attack_start_times);
         sim_inp(iter) = sim_inp(iter).setVariable('attack_full_times',attack_full_times);
         sim_inp(iter) = sim_inp(iter).setVariable('attack_final_deviations',attack_final_deviations);
-    elseif attack_type == "sin"
+    elseif attack_type == "sin" || attack_type == "pulse"
         % for sin attack
         attack_start_times      = attack_start_injection*ones(n_meas,1);
         attack_full_times       = attack_start_times + 0;

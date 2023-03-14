@@ -7,7 +7,7 @@ attack_percentage = 1;
 
 % choose attack policy
 % "ramp", "pulse", "sin"
-attack_type = "ramp";
+attack_type = "pulse";
 
 Run_sim;
 N_test = 2000;
@@ -16,7 +16,7 @@ if attack_type == "ramp"
     Z_attack_data = rand(3*n_attacked_nodes,N_test);
     attack_data = ramp_attack_policy(policy_param,Z_attack_data);
 elseif attack_type == "pulse"
-    Z_attack_data = rand(3*n_attacked_nodes,N_test);
+    Z_attack_data = rand(4*n_attacked_nodes,N_test);
     attack_data = pulse_attack_policy(policy_param,Z_attack_data);
 elseif attack_type == "sin"
     Z_attack_data = rand(4*n_attacked_nodes,N_test);

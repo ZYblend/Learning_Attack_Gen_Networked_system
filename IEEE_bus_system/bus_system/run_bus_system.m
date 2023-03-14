@@ -145,8 +145,8 @@ attack_start_injection = 2;  % Global attack injection start time
 % Initializing attacks (zeros)
 attack_start_times      = attack_start_injection*ones(n_meas,1); 
 attack_full_times       = attack_start_times + 4;
-if attack_type == "ramp" || attack_type =="pulse"
+if attack_type == "ramp"
     attack_final_deviations = 0.0*ones(n_meas,1);   % for ramp, pulse attack
-elseif attack_type == "sin"
+elseif attack_type == "sin" || attack_type =="pulse"
     attack_final_deviations = zeros(n_meas,2);  % for sin attack
 end

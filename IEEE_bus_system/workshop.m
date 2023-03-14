@@ -17,11 +17,16 @@ n_generator_sim_sample = round(n_random_sim_samples);
 alpha = 0.8;  % probability of success
 % beta  = 1 - alpha;
 
-if attack_type == "ramp" || attack_type =="pulse"
+if attack_type == "ramp" 
     thresh_1 = 0.05;  % threshold for stealthiness
     thresh_2 = 0.04;  % threshold for effectivness
     
     out_size = 3*n_attacked_nodes;  % dimension of smallest Eucliden space containing set S.
+elseif attack_type =="pulse"
+    thresh_1 = 0.05;  % threshold for stealthiness
+    thresh_2 = 0.02;  % threshold for effectivness
+
+    out_size = 4*n_attacked_nodes;
 elseif attack_type == "sin"
     thresh_1 = 0.05;  % threshold for stealthiness
     thresh_2 = 0.02;  % threshold for effectivness

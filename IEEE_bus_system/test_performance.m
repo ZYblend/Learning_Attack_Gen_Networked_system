@@ -7,16 +7,16 @@ attack_percentage = 1;
 
 % choose attack policy
 % "ramp", "pulse", "sin"
-attack_type = "ramp";
+attack_type = "pulse";
 
 Run_sim;
 n_epoch = 10;
 tot_test = 1000;
 
-if attack_type == "ramp" || attack_type =="pulse"
+if attack_type == "ramp"
     thresh_1 = 0.05;  % threshold for stealthiness
     thresh_2 = 0.04;  % threshold for effectivness
-elseif attack_type == "sin"
+elseif attack_type == "sin"  || attack_type =="pulse"
     thresh_1 = 0.05;  % threshold for stealthiness
     thresh_2 = 0.02;  % threshold for effectivness
 end
