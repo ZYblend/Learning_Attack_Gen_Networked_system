@@ -6,14 +6,14 @@ clc
 %% define hyperparameters
 attack_percentage = 1;
 % choose network topology: linear, tree, cyclic
-topology = "linear";
+topology = "cyclic";
 
 Run_sim;
 n_epoch = 5;
-tot_test = 100;
+tot_test = 36;
 
-thresh_1 = 0.2;  % threshold for stealthiness
-thresh_2 = 10;  % threshold for effectivness
+thresh_1 = 0.025;  % threshold for stealthiness
+thresh_2 = 50;  % threshold for effectivness
 thresholds = [thresh_1,thresh_2];
 
 %% Testing trained networks

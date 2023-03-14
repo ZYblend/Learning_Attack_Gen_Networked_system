@@ -29,11 +29,11 @@ Run_sim
 %                     (Run_Sim in this case)
 if(isempty(sim_inp_in))
     if topology == "linear"
-        model = "linear_topology/pipline_system";
+        model = "pipline_system_linear";
     elseif topology == "tree"
-        model = "tree_topology/pipline_system";
+        model = "pipline_system_tree";
     elseif topology == "cyclic"
-        model = "cyclic_topology/pipline_system";
+        model = "pipline_system_cyclic";
     end
     load_system(model);
 

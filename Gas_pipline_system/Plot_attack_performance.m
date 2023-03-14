@@ -25,7 +25,7 @@ topology = "linear";
 z_attack_data = Z_attack_data(:,51);  % lowest detection probability
 plot_single_attack_performance;
 
-index_low_detect = find(stealth_index == min(stealth_index));
+index_low_detect = find(effect_index == min(effect_index));
 z_attack_data = Z_attack_data(:,index_low_detect);  % highest detection probability 
 plot_single_attack_performance;
 
