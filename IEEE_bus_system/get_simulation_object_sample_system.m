@@ -75,7 +75,8 @@ for iter = 1:batch_size
     
         attack_start_times(attack_indices)      = attack_data(1:n_attacked_nodes,iter);
         attack_full_times(attack_indices)       = attack_start_times(attack_indices) + attack_data(n_attacked_nodes+1:2*n_attacked_nodes,iter);
-        attack_final_deviations(attack_indices) = attack_data(2*n_attacked_nodes+1:3*n_attacked_nodes,iter);
+        attack_final_deviations(attack_indices,1) = attack_data(2*n_attacked_nodes+1:3*n_attacked_nodes,iter);
+        attack_final_deviations(attack_indices,2) = attack_data(3*n_attacked_nodes+1:4*n_attacked_nodes,iter);
     
         sim_inp(iter) = sim_inp(iter).setVariable('attack_start_times',attack_start_times);
         sim_inp(iter) = sim_inp(iter).setVariable('attack_full_times',attack_full_times);

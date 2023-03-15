@@ -2,25 +2,34 @@ attack_percentage = 1;
 Run_sim;
 
 % define attack parameters in simulation
-if attack_type == "ramp" || attack_type == "pulse"
-    if attack_type == "ramp"
-        attack_data = ramp_attack_policy(policy_param,z_attack_data);
-    elseif attack_type == "pulse"
-        attack_data = pulse_attack_policy(policy_param,z_attack_data);
-    end
-    % for ramp and pulse attack
+if attack_type == "ramp" 
+    attack_data = ramp_attack_policy(policy_param,z_attack_data);
+
+    % for ramp attack
     attack_start_times      = attack_start_injection*ones(n_meas,1);
-    attack_full_times       = attack_start_times +  100;
-    attack_final_deviations = zeros(n_meas,1);
+    attack_full_times       = attack_start_times +  0;
+    attack_final_deviations = zeros(n_meas,2);
     
     attack_start_times(attack_indices)      = attack_data(1:n_attacked_nodes);
     attack_full_times(attack_indices)       = attack_start_times(attack_indices) + attack_data(n_attacked_nodes+1:2*n_attacked_nodes);
-    attack_final_deviations(attack_indices) = attack_data(2*n_attacked_nodes+1:3*n_attacked_nodes);
+    attack_final_deviations(attack_indices,1) = attack_data(2*n_attacked_nodes+1:3*n_attacked_nodes);
+    attack_final_deviations(attack_indices,2) = attack_data(3*n_attacked_nodes+1:4*n_attacked_nodes);
+elseif attack_type == "pulse"
+    attack_data = pulse_attack_policy(policy_param,z_attack_data);
+
+    attack_start_times      = attack_start_injection*ones(n_meas,1);
+    attack_full_times       = attack_start_times +  0;
+    attack_final_deviations = zeros(n_meas,2);
+    
+    attack_start_times(attack_indices)      = attack_data(1:n_attacked_nodes);
+    attack_full_times(attack_indices)       = attack_start_times(attack_indices) + attack_data(n_attacked_nodes+1:2*n_attacked_nodes);
+    attack_final_deviations(attack_indices,1) = attack_data(2*n_attacked_nodes+1:3*n_attacked_nodes);
+    attack_final_deviations(attack_indices,2) = attack_data(3*n_attacked_nodes+1:4*n_attacked_nodes);
 elseif attack_type == "sin"
     attack_data = sin_attack_policy(policy_param,z_attack_data);
     % for sin attack
     attack_start_times      = attack_start_injection*ones(n_meas,1);
-    attack_full_times       = attack_start_times +  100;
+    attack_full_times       = attack_start_times +  0;
     attack_final_deviations = zeros(n_meas,2);
     
     attack_start_times(attack_indices)      = attack_data(1:n_attacked_nodes);
@@ -73,3 +82,4 @@ hold on, yline(thresh_1,'r--',LineWidth=LW);
 title('BDD Residual')
 set(gca,"FontSize",12)
 
+save('time_series_test_data.mat','attack_data','z_attack_data','attack_start_times','attack_full_times','attack_final_deviations','out','-v7.3')

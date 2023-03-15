@@ -24,11 +24,12 @@ attack_start_time_interval = policy_param{1,1};
 delta_attack_start_time_interval = attack_start_time_interval(2) - attack_start_time_interval(1);
 % attack_time_span_max = round(0.3*t_sim_stop);
 attack_time_span_max_rate = policy_param{1,2};
-t_sim_stop = policy_param{1,4};
+t_sim_stop = policy_param{1,5};
 attack_time_span_max = attack_time_span_max_rate*t_sim_stop;
 % attack_max = 50;
-attack_max = policy_param{1,3};
-n_attacked_nodes = round(size(Z_attack_data,1)/3);
+a_attack_interval = policy_param{1,3};
+b_attack_interval = policy_param{1,4};
+n_attacked_nodes = round(size(Z_attack_data,1)/4);
 
 %% generate attacks
 % attack start times
@@ -40,8 +41,10 @@ attack_time_span_min = 2e-5;
 attack_time_span   = attack_time_span_min + attack_time_span_max*Z_attack_data(n_attacked_nodes+1:2*n_attacked_nodes,:);
 
 % attack final deviations
-attack_final_deviations = attack_max*Z_attack_data(2*n_attacked_nodes+1:3*n_attacked_nodes,:);
+a_attack = a_attack_interval(1)+(a_attack_interval(2)-a_attack_interval(1))*Z_attack_data(2*n_attacked_nodes+1:3*n_attacked_nodes,:);
+b_attack = b_attack_interval(1)+(b_attack_interval(2)-b_attack_interval(1))*Z_attack_data(3*n_attacked_nodes+1:4*n_attacked_nodes,:);
+attack_deviation_param = [a_attack; b_attack];
 
 attack_data = [attack_start_times;
                attack_time_span;
-               attack_final_deviations];
+               attack_deviation_param];

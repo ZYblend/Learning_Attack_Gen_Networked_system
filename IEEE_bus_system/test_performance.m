@@ -7,7 +7,7 @@ attack_percentage = 1;
 
 % choose attack policy
 % "ramp", "pulse", "sin"
-attack_type = "pulse";
+attack_type = "ramp";
 
 Run_sim;
 n_epoch = 10;
@@ -15,8 +15,11 @@ tot_test = 1000;
 
 if attack_type == "ramp"
     thresh_1 = 0.05;  % threshold for stealthiness
-    thresh_2 = 0.04;  % threshold for effectivness
-elseif attack_type == "sin"  || attack_type =="pulse"
+    thresh_2 = 0.02;  % threshold for effectivness
+elseif attack_type =="pulse"
+    thresh_1 = 0.05;  % threshold for stealthiness
+    thresh_2 = 0.02;  % threshold for effectivness
+elseif attack_type == "sin" 
     thresh_1 = 0.05;  % threshold for stealthiness
     thresh_2 = 0.02;  % threshold for effectivness
 end
@@ -64,7 +67,8 @@ effect = [effect_index(1:1000),effect_epoch];
 hold on, boxplot(effect);
 xlabel('Epoch')
 ylabel('Effectiveness')
-ylim([0,0.5])
+
+save('test_performance.mat','effect','stealth','yc_nominal','-v7.3');
 
 
 
