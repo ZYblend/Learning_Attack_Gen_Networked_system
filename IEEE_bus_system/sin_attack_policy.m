@@ -1,22 +1,25 @@
-function attack_data = ramp_attack_policy(policy_param,Z_attack_data)
-%% function attack_data = ramp_attack_policy(policy_param,Z_attack_data)
-% ramp attack policy
+function attack_data = sin_attack_policy(policy_param,Z_attack_data)
+%% function attack_data = sin_attack_policy(policy_param,Z_attack_data)
+% sin attack policy
+% y = a*sin(b*t) *(t_start_time<t<t_end_time)
 % inputs:
-%        policy_param: {attack_start_time_interval, attack_time_span_max_rate, attack_max}
+%        policy_param: {attack_start_time_interval, attack_time_span_max_rate, a_attack_interval,b_attack_interval, t_time_stop}
 %                     - attack_start_time_interval: [1-by-2] start time interval
 %                     - attack_time_span_max_rate: [scalar] attack_time_span_max = attack_time_span_max_rate*t_time_stop
-%                     - attack_max: [scalar] final ramp deviation
+%                     - a_attack_interval: [1-by-2] smallest and biggest value for a
+%                     - b_attack_interval: [1-by-2] smallest and biggest value for b
 %                     - t_time_stop: [scalar] total simualtion time of system
-%        Z_attack: [3*n_attacked_nodes,n_sim_samples] attack parameters (percenatages) for each attack node
-%              Z_attack(1:n_attacked_nodes,:)                     : attack start time for each attack node
-%              Z_attack(n_attacked_nodes+1:2*n_attacked_nodes,:)  : attack time spans for each attack node
-%              Z_attack(2*n_attacked_nodes+1:3*n_attacked_nodes,:): attack final deviations for each attack node
+%        Z_attack_data: [4*n_attacked_nodes,n_sim_samples] attack parameters (percenatages) for each attack node
+%              Z_attack_data(1:n_attacked_nodes,:)                     : attack start time for each attack node
+%              Z_attack_data(n_attacked_nodes+1:2*n_attacked_nodes,:)  : attack time spans for each attack node
+%              Z_attack_data(2*n_attacked_nodes+1:3*n_attacked_nodes,:): a value for each attack node
+%              Z_attack_data(3*n_attacked_nodes+1:4*n_attacked_nodes,:): b value for each attack node
 % output:
-%        attack_start_times
+%        attack_data
 %
-% Author: Olugbenga Moses Anubi, Florida state university
-%         Yu Zheng, Florida state university
-% 08/17/2022
+% Author: 
+% Yu Zheng, Florida state university
+% 03/11/2023
 
 %% attack policy parameters
 attack_start_time_interval = policy_param{1,1};
