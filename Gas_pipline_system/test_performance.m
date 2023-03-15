@@ -10,10 +10,10 @@ topology = "cyclic";
 
 Run_sim;
 n_epoch = 5;
-tot_test = 36;
+tot_test = 180;
 
 thresh_1 = 0.025;  % threshold for stealthiness
-thresh_2 = 50;  % threshold for effectivness
+thresh_2 = 55;  % threshold for effectivness
 thresholds = [thresh_1,thresh_2];
 
 %% Testing trained networks
@@ -49,6 +49,6 @@ hold on, boxplot(effect_epoch)
 xlabel('Epoch')
 ylabel('Effectiveness')
 
-
+save('test_performance.mat','effect_epoch','stealth_epoch','-v7.3');
 
 

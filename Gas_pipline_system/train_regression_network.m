@@ -1,4 +1,4 @@
-function net = train_regression_network(net,dataset,loss_curve_param,i_epoch,figure_name)
+function net = train_regression_network(net,dataset,loss_curve_param,train_param,i_epoch,figure_name)
 %% function net = train_regression_network(net,dataset,loss_curve_param)
 % Use this function to train regression network with mean square error loss function
 % Inputs:
@@ -17,7 +17,8 @@ function net = train_regression_network(net,dataset,loss_curve_param,i_epoch,fig
 
 %% training parameters 
 iteration       = 0;
-mini_batch_size = 1000;
+% mini_batch_size = 1000;
+mini_batch_size = train_param{1,1};
 
 % initialize Adam optimizer
 learnRate = 0.0002;
@@ -31,7 +32,8 @@ trailingAvgSq = [];
 Z_input = dataset{1,1};
 Z_output = dataset{1,2};
 
-n_batch = 20;
+% n_batch = 20;
+n_batch = train_param{1,2};
 % n_samples = round(n_batch*mini_batch_size);
 % n_batch  = round(n_samples/mini_batch_size);
 

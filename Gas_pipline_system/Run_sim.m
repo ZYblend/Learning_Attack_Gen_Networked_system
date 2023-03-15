@@ -38,9 +38,7 @@ attack_max = 0.5;
 policy_param = {attack_start_time_interval, attack_time_span_max_rate, attack_max, t_sim_stop};
 
 % getting nominal values
-tic
 out = sim(model);
-toc
 
 
 yc_nominal = out.critical_measurement.Data;
