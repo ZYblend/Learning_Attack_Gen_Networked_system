@@ -13,11 +13,11 @@ attack_final_deviations(attack_indices) = attack_data(2*n_attacked_nodes+1:3*n_a
 
 %% run simulation
 if topology == "linear"
-    model = "linear_topology/pipline_system";
+    model = "pipline_system_linear";
 elseif topology == "tree"
-    model = "tree_topology/pipline_system";
+    model = "pipline_system_tree";
 elseif topology == "cyclic"
-    model = "cyclic_topology/pipline_system";
+    model = "pipline_system_cyclic";
 end
 out = sim(model);
 
@@ -40,41 +40,22 @@ figure
 
 
 %% attacked real plot
-subplot(2,2,1);
-plot(y_time,y_data(:,1),'k-',LineWidth=LW);
-% ylim([0 15])
-ylabel('p_1');
-hold on, yline(p_eq(1),'r--',LineWidth=LW);
-grid on
-set(gca,"FontSize",12)
-
-subplot(2,2,2);
-plot(y_time,y_data(:,2),'k-',LineWidth=LW);
-% ylim([0 15])
-ylabel('p_2');
-hold on, yline(p_eq(2),'r--',LineWidth=LW);
-grid on
-set(gca,"FontSize",12)
-
-subplot(2,2,3);
-plot(y_time,y_data(:,3),'k-',LineWidth=LW);
-% ylim([0 20])
-ylabel('p_3');
-hold on, yline(p_eq(3),'r--',LineWidth=LW);
-grid on
-set(gca,"FontSize",12)
-
-subplot(2,2,4);
-plot(y_time,y_data(:,4),'k-',LineWidth=LW);
-% ylim([0 20])
-ylabel('p_4');
-hold on, yline(p_eq(4),'r--',LineWidth=LW);
-grid on
-set(gca,"FontSize",12)
+for idx = 1:n-1
+    subplot(round((n-1)/2),2,idx);
+    plot(y_time,y_data(:,idx),'k-',LineWidth=LW);
+    labelname = "p_"+num2str(idx);
+    ylabel(labelname);
+    hold on, yline(p_eq(idx),'r--',LineWidth=LW);
+    grid on
+    set(gca,"FontSize",12)
+    ylim([6,80])
+end
 
 figure
 plot(out.residual.Time, out.residual.Data,'k-',LineWidth=LW);
 hold on, yline(thresh_1,'r--',LineWidth=LW);
 title('BDD Residual')
 set(gca,"FontSize",12)
+
+save('time_series_test_data.mat','attack_data','z_attack_data','attack_start_times','attack_full_times','attack_final_deviations','out','-v7.3')
 

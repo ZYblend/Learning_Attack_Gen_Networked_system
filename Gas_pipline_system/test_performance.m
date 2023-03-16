@@ -6,7 +6,7 @@ clc
 %% define hyperparameters
 attack_percentage = 1;
 % choose network topology: linear, tree, cyclic
-topology = "cyclic";
+topology = "linear";
 
 Run_sim;
 n_epoch = 5;

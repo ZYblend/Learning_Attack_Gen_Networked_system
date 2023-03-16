@@ -6,7 +6,7 @@
 attack_percentage = 1;
 
 % choose network topology: linear, tree, cyclic
-topology = "cyclic";
+topology = "tree";
 
 Run_sim;
 N_test = 100;

@@ -45,7 +45,7 @@ yc_nominal = out.critical_measurement.Data;
 yc_nominal = reshape(yc_nominal,size(yc_nominal,1),size(yc_nominal,3)).';
 r_nominal = out.residual.Data;
 
-% save('nominal_index.mat','yc_nominal','r_nominal','-v7.3')
+save('nominal_index.mat','yc_nominal','r_nominal','-v7.3')
 
 
 

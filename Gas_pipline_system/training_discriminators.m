@@ -41,7 +41,7 @@ function [effect_net_trained,stealth_net_trained] = training_discriminators(effe
 % effect_net = create_dl_network(inp_size_dis,activation_fcns_effect,n_neurons_effect); % Effectiveness network
 
 dataset_effect_net = {Z_attack_data,effect_index};
-train_param = {2000,20};
+train_param = {1000,20};
 effect_net_trained = train_regression_network(effect_net,dataset_effect_net,loss_curve_param_dis1,train_param,i_epoch,"effect network ,");
 
 
@@ -51,7 +51,7 @@ effect_net_trained = train_regression_network(effect_net,dataset_effect_net,loss
 % stealth_net = create_dl_network(inp_size_dis,activation_fcns_stealth,n_neurons_stealth);  % Stealthiness network
 
 dataset_stealth_net = {Z_attack_data,stealth_index};
-train_param = {2000,20};
+train_param = {1000,20};
 stealth_net_trained = train_regression_network(stealth_net,dataset_stealth_net,loss_curve_param_dis2,train_param,i_epoch,"stealth network ,");
 
 

@@ -4,7 +4,7 @@ clc
 
 attack_percentage = 1;
 % choose network topology: linear, tree, cyclic
-topology = "cyclic";
+topology = "linear";
 
 Run_sim;
 workshop(attack_percentage,topology);
