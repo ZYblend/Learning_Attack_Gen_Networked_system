@@ -7,18 +7,25 @@ close all
 % detector_train_flag = 0;
 % attack_percentage = 1;
 % Run_sim;
+% choose network topology: linear, tree, cyclic
+topology = "linear";
 
 %% get a generated attack
 load('attack_support.mat');
-load('test_performance/14/1   2   3   4   5   6   7   8   9  10  11  12  13  14/test_result.mat');
+if topology == "linear"
+    load('test_performance/12/1   2   3   4   5   6   7   8   9  10  11  12/test_result.mat');
+elseif topology == "tree"
+    load('test_performance/14/1   2   3   4   5   6   7   8   9  10  11  12  13  14/test_result.mat');
+elseif topology == "cyclic"
+    load('test_performance/16/1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16/test_result.mat');
+end
+
 
 %% define hyperparameters
 thresh_1 = 0.025;  % threshold for stealthiness
 thresh_2 = 55;  % threshold for effectivness
 
 attack_percentage = 1;
-% choose network topology: linear, tree, cyclic
-topology = "tree";
 
 
 %% test

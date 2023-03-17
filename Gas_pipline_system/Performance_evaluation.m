@@ -83,7 +83,7 @@ dir_dis = "test_performance/"+num2str(length(attack_indices))+"/"+num2str(attack
 dir_mdl = "test_performance/"+num2str(length(attack_indices))+"/"+num2str(attack_indices)+"/test_result_with_mdl.mat";
 dir_spt = "test_performance/"+num2str(length(attack_indices))+"/"+num2str(attack_indices)+"/attack_support.mat";
 save(dir_dis,'y_effect','y_stealth','-v7.3');
-save(dir_mdl,'effect_index','stealth_index','-v7.3');
+save(dir_mdl,'Z_attack_data','effect_index','stealth_index','-v7.3');
 save(dir_spt,'attack_indices','-v7.3');
 
 
