@@ -1,4 +1,4 @@
-function [test_score_dis,test_score_sim,y_stealth,y_effect,stealth_index, effect_index] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,n_test,attack_percentage,policy_param,plot_flag)
+function [test_score_dis,test_score_sim,y_stealth,y_effect,stealth_index, effect_index] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,n_test,attack_percentage,policy_param,topology,plot_flag)
 %% function test_score = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds)
 % two tests:
 %           1) run generator, obtain stealth and effect indexes from discriminators
@@ -69,7 +69,7 @@ attack_data = ramp_attack_policy(policy_param,Z_attack_data);
 
 sim_obj = [];
 
-[sim_obj]  = get_simulation_object_sample_system(sim_obj,attack_data,attack_percentage);
+[sim_obj]  = get_simulation_object_sample_system(sim_obj,attack_data,attack_percentage,topology);
 [effect_index,stealth_index] = get_error_from_nominal(sim_obj);
 
 
@@ -83,7 +83,7 @@ dir_dis = "test_performance/"+num2str(length(attack_indices))+"/"+num2str(attack
 dir_mdl = "test_performance/"+num2str(length(attack_indices))+"/"+num2str(attack_indices)+"/test_result_with_mdl.mat";
 dir_spt = "test_performance/"+num2str(length(attack_indices))+"/"+num2str(attack_indices)+"/attack_support.mat";
 save(dir_dis,'y_effect','y_stealth','-v7.3');
-save(dir_mdl,'effect_index','stealth_index','-v7.3');
+save(dir_mdl,'Z_attack_data','effect_index','stealth_index','-v7.3');
 save(dir_spt,'attack_indices','-v7.3');
 
 

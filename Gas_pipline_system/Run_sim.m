@@ -7,7 +7,19 @@ addpath('pipeline_system');
 t_sim_stop = 200;  % total simulation time per incidence
 
 %% system param
-run_pipeline_system;
+if topology == "linear"
+    addpath('pipeline_system/linear_topology')
+    run_pipeline_system_linear;
+    model = "pipline_system_linear";
+elseif topology == "tree"
+    addpath('pipeline_system/tree_topology')
+    run_pipeline_system_tree;
+    model = "pipline_system_tree";
+elseif topology == "cyclic"
+    addpath('pipeline_system/cyclic_topology')
+    run_pipeline_system_cyclic;
+    model = "pipline_system_cyclic";
+end
 
 % attack location
 % attack_percentage = 1.0;
@@ -26,7 +38,6 @@ attack_max = 0.5;
 policy_param = {attack_start_time_interval, attack_time_span_max_rate, attack_max, t_sim_stop};
 
 % getting nominal values
-model = "pipline_system";
 out = sim(model);
 
 

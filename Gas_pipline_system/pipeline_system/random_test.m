@@ -4,15 +4,19 @@
 % clc
 
 attack_percentage = 1;
+
+% choose network topology: linear, tree, cyclic
+topology = "tree";
+
 Run_sim;
-N_test = 1000;
+N_test = 100;
 
 Z_attack_data = rand(3*n_attacked_nodes,N_test);
 attack_data = ramp_attack_policy(policy_param,Z_attack_data);
 
 sim_obj = [];
 
-[sim_obj]  = get_simulation_object_sample_system(sim_obj,attack_data,attack_percentage);
+[sim_obj]  = get_simulation_object_sample_system(sim_obj,attack_data,attack_percentage,topology);
 [effect_index,stealth_index] = get_error_from_nominal(sim_obj);
 
 %%

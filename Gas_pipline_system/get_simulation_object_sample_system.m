@@ -1,4 +1,4 @@
-function [sim_out] = get_simulation_object_sample_system(sim_inp_in,attack_data,attack_percentage)
+function [sim_out] = get_simulation_object_sample_system(sim_inp_in,attack_data,attack_percentage,topology)
 % Returns an array of Simulink.SimulationInput object for parrallel
 % execution
 %
@@ -28,8 +28,13 @@ Run_sim
 % NOTE: All variables will be supplied by a call to the run file 
 %                     (Run_Sim in this case)
 if(isempty(sim_inp_in))
-
-    model = 'pipline_system';
+    if topology == "linear"
+        model = "pipline_system_linear";
+    elseif topology == "tree"
+        model = "pipline_system_tree";
+    elseif topology == "cyclic"
+        model = "pipline_system_cyclic";
+    end
     load_system(model);
 
 %     % build rapid accelerator target
@@ -51,7 +56,9 @@ if(isempty(sim_inp_in))
         sim_inp(iter) = sim_inp(iter).setVariable('B',B);
         sim_inp(iter) = sim_inp(iter).setVariable('w_eq',w_eq);
         sim_inp(iter) = sim_inp(iter).setVariable('p_eq',p_eq);
+        sim_inp(iter) = sim_inp(iter).setVariable('p_init',p_init);
         sim_inp(iter) = sim_inp(iter).setVariable('n',n);
+        sim_inp(iter) = sim_inp(iter).setVariable('n_meas',n_meas);
 % control param
         sim_inp(iter) = sim_inp(iter).setVariable('M',M);
         sim_inp(iter) = sim_inp(iter).setVariable('Aeq',Aeq);
@@ -63,6 +70,8 @@ if(isempty(sim_inp_in))
         sim_inp(iter) = sim_inp(iter).setVariable('Q',Q);
         sim_inp(iter) = sim_inp(iter).setVariable('R',R);
         sim_inp(iter) = sim_inp(iter).setVariable('Ts',Ts);
+        sim_inp(iter) = sim_inp(iter).setVariable('Tsim',Tsim);
+        sim_inp(iter) = sim_inp(iter).setVariable('T_MPC',T_MPC);
         sim_inp(iter) = sim_inp(iter).setVariable('t_sim_stop',t_sim_stop);
 
     end
@@ -86,6 +95,7 @@ for iter = 1:batch_size
 end
 
 sim_out = parsim(sim_inp);
+
 
 %% calculate effectiveness and stealthiness
 % [effect_index, stealth_index] = get_error_from_nominal(sim_out,yc_nominal,r_nominal);

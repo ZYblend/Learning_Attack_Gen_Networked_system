@@ -1,9 +1,8 @@
-function workshop
-clc
-clear
-close all
+function workshop(attack_percentage,topology)
+% clc
+% clear
+% close all
 
-attack_percentage = 1;
 %% load system base parameters
 Run_sim;
 
@@ -11,15 +10,15 @@ Run_sim;
 n_epoch         = 5;
 
 generate_generator_data_flag = true;
-n_random_sim_samples = 2000;  % Number of random attack dataset per epoch used to train descriminators
+n_random_sim_samples = 1000;  % Number of random attack dataset per epoch used to train descriminators
 n_generator_sim_sample = round(n_random_sim_samples);
 
 %% Initialize Generator network
 alpha = 0.8;  % probability of success
 % beta  = 1 - alpha;
 
-thresh_1 = 0.2;  % threshold for stealthiness
-thresh_2 = 10;  % threshold for effectivness
+thresh_1 = 0.02;  % threshold for stealthiness
+thresh_2 = 65;  % threshold for effectivness
 thresholds = [thresh_1,thresh_2];
 
 
@@ -36,7 +35,7 @@ catch
     n_neurons_gen = [50*inp_size,100*inp_size,50*inp_size,out_size];
     gen_net = create_dl_network(inp_size,activation_fcns_gen,n_neurons_gen); % generator network
 
-    inp_size_dis = 3*n_attacked_nodes;
+    inp_size_dis = out_size;
     activation_fcns_effect = ["relu","relu","relu","linear"];
     n_neurons_effect = [50*inp_size_dis,100*inp_size_dis,50*inp_size_dis,1];
     effect_net = create_dl_network(inp_size_dis,activation_fcns_effect,n_neurons_effect); % Effectiveness network
@@ -45,7 +44,7 @@ catch
     n_neurons_stealth = [50*inp_size_dis,100*inp_size_dis,50*inp_size_dis,1];
     stealth_net = create_dl_network(inp_size_dis,activation_fcns_stealth,n_neurons_stealth); % stealthiness network
 end
-inp_size_dis = 3*n_attacked_nodes;
+inp_size_dis = out_size;
 
 %% loss curve Plot routine
 loss_fig_gen = figure;
@@ -79,9 +78,16 @@ loss_curve_param_dis1 = {loss_fig_dis1,dis1LossTrain,start};
 loss_curve_param_dis2 = {loss_fig_dis2,dis2LossTrain,start};
 
  %%% random attack dataset 
-[Z_attack_data_rand,effect_index_rand,stealth_index_rand] = random_attack_dataset_gen(n_attacked_nodes,n_random_sim_samples,attack_percentage,policy_param);
 cache_dir_rand = "training_dataset/"+ num2str(length(attack_indices))+"/"+num2str(attack_indices)+"/random_attack_data.mat" ;
-save(cache_dir_rand, 'effect_index_rand','stealth_index_rand','Z_attack_data_rand','-v7.3');
+try
+    local_var_rand = load(cache_dir_rand);
+    Z_attack_data_rand = local_var_rand.Z_attack_data_rand;
+    effect_index_rand  = local_var_rand.effect_index_rand;
+    stealth_index_rand = local_var_rand.stealth_index_rand;
+catch
+    [Z_attack_data_rand,effect_index_rand,stealth_index_rand] = random_attack_dataset_gen(n_attacked_nodes,n_random_sim_samples,attack_percentage,policy_param,topology);
+    save(cache_dir_rand, 'effect_index_rand','stealth_index_rand','Z_attack_data_rand','-v7.3');
+end
 
 %% Training
 for i_epoch = 1:n_epoch
@@ -94,7 +100,7 @@ for i_epoch = 1:n_epoch
         effect_index_gen  = local_var_gen.effect_index_gen;
         stealth_index_gen = local_var_gen.stealth_index_gen;
     catch
-        [Z_attack_data_gen,effect_index_gen,stealth_index_gen] = generator_attack_dataset_gen(gen_net,generate_generator_data_flag,inp_size,n_generator_sim_sample,attack_percentage,policy_param);
+        [Z_attack_data_gen,effect_index_gen,stealth_index_gen] = generator_attack_dataset_gen(gen_net,generate_generator_data_flag,inp_size,n_generator_sim_sample,attack_percentage,policy_param,topology);
         save(cache_dir_gen, 'effect_index_gen','stealth_index_gen','Z_attack_data_gen','-v7.3');
     end
 
@@ -130,9 +136,9 @@ savefig(dir_dis2)
 dir_net = "test_performance/"+num2str(length(attack_indices))+"/"+num2str(attack_indices)+"/trained_network.mat";
 save(dir_net,'gen_net','stealth_net','effect_net','-v7.3');
 
-tot_test = 6000;
+tot_test = 180;
 n_test = round(tot_test/nchoosek(n_meas,n_attacked_nodes));
-[test_score_dis,test_score_sim,~,~,~,~] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,n_test,attack_percentage,policy_param,true);
+[test_score_dis,test_score_sim,~,~,~,~] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,n_test,attack_percentage,policy_param,topology,true);
 disp("Testing score with discriminators = " + num2str(test_score_dis) + " ::: Target = " + num2str(alpha))
 disp("Testing score with model simualtion = " + num2str(test_score_sim) + " ::: Target = " + num2str(alpha))
 
