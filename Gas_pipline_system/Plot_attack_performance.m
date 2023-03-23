@@ -8,7 +8,7 @@ close all
 % attack_percentage = 1;
 % Run_sim;
 % choose network topology: linear, tree, cyclic
-topology = "linear";
+topology = "cyclic";
 
 %% get a generated attack
 load('attack_support.mat');
@@ -22,8 +22,8 @@ end
 
 
 %% define hyperparameters
-thresh_1 = 0.025;  % threshold for stealthiness
-thresh_2 = 55;  % threshold for effectivness
+thresh_1 = 0.02;  % threshold for stealthiness
+thresh_2 = 65;  % threshold for effectivness
 
 attack_percentage = 1;
 
@@ -32,8 +32,8 @@ attack_percentage = 1;
 % z_attack_data = Z_attack_data(:,51);  % lowest detection probability
 % plot_single_attack_performance;
 
-index_low_detect = find(effect_index == max(effect_index));
-z_attack_data = Z_attack_data(:,index_low_detect);  % highest detection probability 
+biggest_detect = find(stealth_index == max(stealth_index(stealth_index<=thresh_1)));
+z_attack_data = Z_attack_data(:,biggest_detect);  % highest detection probability 
 plot_single_attack_performance;
 
 % index_high_effect = find(effect_index == max(effect_index));

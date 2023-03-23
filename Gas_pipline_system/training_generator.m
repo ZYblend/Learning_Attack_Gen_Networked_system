@@ -76,7 +76,7 @@ for ind = 1:mini_batch_size:n_samples
     y_stealth = predict(stealth_net,out);
     y_effect  = predict(effect_net,out);
     batch_file = "training_performance/"+ num2str(length(attack_indices))+"/"+num2str(attack_indices)+"/PreTraining_Epoch" + num2str(i_epoch) + "Batch"+ num2str(iteration)+".mat";
-    save(batch_file,'y_stealth','y_effect','-v7.3')
+    save(batch_file,'gen_net','y_stealth','y_effect','-v7.3')
 
     % Getting mini-batch input data
     idx = ind:min(ind+mini_batch_size-1,n_samples);
@@ -97,7 +97,7 @@ for ind = 1:mini_batch_size:n_samples
     y_stealth = predict(stealth_net,out);
     y_effect  = predict(effect_net,out);
     batch_file = "training_performance/"+ num2str(length(attack_indices))+"/"+num2str(attack_indices)+"/PostTraining_Epoch" + num2str(i_epoch) + "Batch"+ num2str(iteration)+".mat";
-    save(batch_file,'y_stealth','y_effect','-v7.3')
+    save(batch_file,'gen_net','y_stealth','y_effect','-v7.3')
 end
 % Display the training progress.
 figure(loss_fig_gen)
@@ -133,7 +133,7 @@ function [gradients,states,loss] = model_loss(net,Z,beta_n,stealth_net,effect_ne
 [g_theta, states] = forward(net,Z);
 % loss    = relu((sum(exp(f1(stealth_net,g_theta,thresh_1))) - beta_n)) + ...
 %            relu((sum(exp(f2(effect_net,g_theta,thresh_2))) - beta_n));
-loss = relu(mean(10*f1(stealth_net,g_theta,thresh_1))) + relu(mean(f2(effect_net,g_theta,thresh_2)/100));
+loss = relu(mean(50*f1(stealth_net,g_theta,thresh_1))) + relu(mean(f2(effect_net,g_theta,thresh_2)/100));
 % loss    = relu((sum(exp(leakyrelu(f1(stealth_net,g_theta,thresh_1))+ leakyrelu(f2(effect_net,g_theta,thresh_2)))) - beta_n));
 
 gradients = dlgradient(loss,net.Learnables);

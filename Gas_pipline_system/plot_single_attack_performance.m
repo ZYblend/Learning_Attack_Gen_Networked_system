@@ -49,6 +49,7 @@ for idx = 1:n-1
     grid on
     set(gca,"FontSize",12)
     ylim([6,80])
+    xlim([0,200])
 end
 
 figure
@@ -56,6 +57,7 @@ plot(out.residual.Time, out.residual.Data,'k-',LineWidth=LW);
 hold on, yline(thresh_1,'r--',LineWidth=LW);
 title('BDD Residual')
 set(gca,"FontSize",12)
+xlim([0,200])
 
 save('time_series_test_data.mat','attack_data','z_attack_data','attack_start_times','attack_full_times','attack_final_deviations','out','-v7.3')
 

@@ -12,8 +12,8 @@ Run_sim;
 n_epoch = 5;
 tot_test = 180;
 
-thresh_1 = 0.025;  % threshold for stealthiness
-thresh_2 = 55;  % threshold for effectivness
+thresh_1 = 0.02;  % threshold for stealthiness
+thresh_2 = 65;  % threshold for effectivness
 thresholds = [thresh_1,thresh_2];
 
 %% Testing trained networks
@@ -29,8 +29,8 @@ for i_epoch = 1:n_epoch
     stealth_net = load_nets.stealth_net;
 
     % test with simulation
-    n_test = round(tot_test/nchoosek(n_meas,n_attacked_nodes));
-    [test_score_dis,test_score_sim,~,~,stealth_epoch(:,i_epoch), effect_epoch(:,i_epoch)] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,n_test,attack_percentage,policy_param,topology,false);
+%     n_test = round(tot_test/nchoosek(n_meas,n_attacked_nodes));
+    [test_score_dis,test_score_sim,~,~,stealth_epoch(:,i_epoch), effect_epoch(:,i_epoch)] = Performance_evaluation(gen_net,stealth_net,effect_net,thresholds,tot_test,attack_percentage,policy_param,topology,false);
     disp("Testing score with discriminators = " + num2str(test_score_dis) )
     disp("Testing score with model simualtion = " + num2str(test_score_sim))
 
